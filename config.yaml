@@ -1,0 +1,110 @@
+# =====================================================================================
+# 최적화된 PEG 분석 시스템 설정 파일
+# =====================================================================================
+
+# 데이터베이스 설정
+database:
+  type: "postgresql"  # postgresql, sqlite, mysql
+  host: "localhost"
+  port: 5432
+  database: "peg_statistics"
+  user: "username"
+  password: "password"
+  
+  # SQLite 사용 시
+  # type: "sqlite"
+  # path: "/path/to/peg_statistics.db"
+
+# 분석 파라미터
+analysis:
+  default_threshold: 30.0
+  critical_threshold: 50.0
+  improvement_threshold: 20.0
+  correlation_threshold: 0.7
+  
+  # 이상치 탐지 설정
+  anomaly_detection:
+    std_multiplier: 2.0
+    iqr_multiplier: 1.5
+  
+  # 성능 등급 기준
+  performance_grades:
+    A: 10.0    # 10% 이상 개선
+    B: 0.0     # 0-10% 개선
+    C: -10.0   # 0-10% 저하
+    D: -999.0  # 10% 이상 저하
+
+# 차트 생성 설정
+charts:
+  dpi: 300
+  figure_size: [15, 6]
+  style: "seaborn-v0_8"
+  
+# 리포트 설정
+report:
+  output_directory: "/app/backend/analysis_output"
+  formats: ["html", "pdf", "json"]
+  default_format: "html"
+  
+  # HTML 리포트 스타일
+  html:
+    theme: "modern"
+    include_charts: true
+    include_summary: true
+    include_detailed_analysis: true
+
+# 성능 최적화 설정
+performance:
+  max_workers: 4
+  chunk_size: 1000
+  timeout_seconds: 300
+  
+  # 캐싱 설정
+  cache:
+    enabled: true
+    ttl_seconds: 3600  # 1시간
+    max_size: 1000
+
+# 로깅 설정
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(levelname)s - %(message)s"
+  file: "/var/log/peg_analysis.log"
+  max_size_mb: 100
+  backup_count: 5
+
+# API 설정
+api:
+  host: "0.0.0.0"
+  port: 8000
+  timeout: 300
+  max_request_size: "100MB"
+  
+  # CORS 설정
+  cors:
+    enabled: true
+    origins: ["*"]
+    methods: ["GET", "POST", "OPTIONS"]
+
+# 보안 설정
+security:
+  api_key_required: false
+  rate_limit:
+    enabled: true
+    requests_per_minute: 60
+  
+  # 데이터 암호화
+  encryption:
+    enabled: false
+    algorithm: "AES-256"
+
+# 모니터링 설정
+monitoring:
+  enabled: true
+  metrics_endpoint: "/metrics"
+  
+  # 알림 설정
+  alerts:
+    error_threshold: 5
+    response_time_threshold: 30  # 초
+    email_notifications: false
